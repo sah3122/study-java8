@@ -29,3 +29,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+.gradle
+
+/gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar

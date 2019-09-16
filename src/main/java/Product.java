@@ -4,6 +4,10 @@
 public class Product {
     private int amount;
 
+    public Product(int amount) {
+        this.amount = amount;
+    }
+
     public int getAmount() {
         return amount;
     }

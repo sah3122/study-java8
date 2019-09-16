@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
@@ -44,11 +45,48 @@ public class StreamDemo {
         endLine();
 
         startLine("parallel Stream");
-        List<Product> productList = Arrays.asList(new Product(), new Product(), new Product());
+
+        List<Product> productList = Arrays.asList(new Product(10), new Product(20), new Product(21));
         Stream<Product> parallelStream = productList.parallelStream();
+
         boolean isParallel = parallelStream.isParallel();
         System.out.println(isParallel);
+
+        boolean isMany = parallelStream.map(product -> product.getAmount() * 10).anyMatch(amount -> amount > 200);
+        System.out.println(isMany);
+
+        //Arrays.stream(arr).parallel(); 배열을 이용한 병렬 스트림 생성
+
+        IntStream intStream1 = IntStream.range(1, 150).parallel();
+        isParallel = intStream1.isParallel();
+        System.out.println(isParallel);
+
+        intStream1 = intStream1.sequential(); // 되돌리기
+        isParallel = intStream1.isParallel();
+        System.out.println(isParallel);
+
         endLine();
+
+        startLine("Stream Concat");
+
+        Stream<String> stream1 = Stream.of("Java", "Scala", "Groovy");
+        Stream<String> stream2 = Stream.of("Python", "Go", "Swift");
+        Stream<String> concat = Stream.concat(stream1, stream2);
+
+        concat.forEach(str -> {
+            System.out.println(str);
+        });
+
+        endLine();
+
+        startLine("Intermediate operations");
+        List<String> names = Arrays.asList("Eric", "Elena", "Java");
+        startLine("Filtering");
+        Stream<String> filterStream = names.stream()
+                .filter(name -> name.contains("a")); // filter는 predicate 인터페이스를 인자로 받으며 boolean을 리턴해야 한다.
+        System.out.println(filterStream.collect(Collectors.toList()));
+        endLine();
+
     }
 
     public static void printStream(Stream stream) {

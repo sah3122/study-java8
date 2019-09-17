@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -99,6 +100,26 @@ public class StreamDemo {
 
         Stream<Integer> mappingStream2 = productList.stream().map(Product::getAmount);
         System.out.println(mappingStream2.collect(Collectors.toList()));
+        endLine();
+
+        startLine("FlatMap");
+        /**
+         * 인자로 Mapper를 받으며 리턴 타입이 Stream이다.
+         * flatmap은 중첩 구조를 한단계 제거하고 단일 컬렉션으로 만들어 주는 역할을 한다.
+         * Flattening
+         */
+        List<List<String>> list = Arrays.asList(Arrays.asList("a"), Arrays.asList("b")); //[[a],[b]]
+        List<String> flatList = list.stream().flatMap(Collection::stream).collect(Collectors.toList());
+
+        System.out.println(flatList.toString());
+
+        List<Student> students = Arrays.asList(new Student(10,11,12), new Student(5,8,6), new Student(13,16,14));
+
+        students.stream()
+                .flatMapToInt(student -> IntStream.of(student.getKor(), student.getEng(), student.getMath()))
+                .average().ifPresent(avg ->
+                System.out.println(Math.round(avg * 10)/10.0)); // student 객체를 int stream으로 만들어 점수의 총합을 평균을 냄
+
         endLine();
 
     }

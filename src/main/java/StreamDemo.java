@@ -81,10 +81,24 @@ public class StreamDemo {
 
         startLine("Intermediate operations");
         List<String> names = Arrays.asList("Eric", "Elena", "Java");
+        /**
+         * Filter 는 스트림 내 요소들을 하나씩 평가해서 걸러내는 작업, 인자로 받는 Predicate는 boolean을 리턴하는 함수형 인터페이스로 평가식을 받음.
+         */
         startLine("Filtering");
         Stream<String> filterStream = names.stream()
                 .filter(name -> name.contains("a")); // filter는 predicate 인터페이스를 인자로 받으며 boolean을 리턴해야 한다.
-        System.out.println(filterStream.collect(Collectors.toList()));
+        System.out.println(filterStream.collect(Collectors.toList())); // Stream to List
+        endLine();
+
+        startLine("Mapping");
+        /**
+         * 맵은 스트림내 요소들을 하나씩 특정 값으로 변환해준다. 인자로는 람다식을 받음.
+         */
+        Stream<String> mappingStream = names.stream().map(String::toUpperCase);
+        System.out.println(mappingStream.collect(Collectors.toList()));
+
+        Stream<Integer> mappingStream2 = productList.stream().map(Product::getAmount);
+        System.out.println(mappingStream2.collect(Collectors.toList()));
         endLine();
 
     }

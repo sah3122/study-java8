@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -122,12 +119,30 @@ public class StreamDemo {
 
         endLine();
 
+        startLine("Sorting");
+
+        List<Integer> sortingResult = IntStream.of(14,11,25,13,16)
+                .sorted()
+                .boxed()
+                .collect(Collectors.toList());
+
+        System.out.println(sortingResult);
+
+        List<String> lang = Arrays.asList("Java", "Scala", "Groovy", "Python", "Go", "Swift");
+
+        lang.stream()
+                .sorted() // 순방향 정렬
+                .collect(Collectors.toList());
+
+        lang.stream()
+                .sorted(Comparator.reverseOrder()) // 역정렬
+                .collect(Collectors.toList());
+
+        endLine();
     }
 
     public static void printStream(Stream stream) {
-        stream.forEach(s -> {
-            System.out.println(s);
-        });
+        stream.forEach(System.out::println);
     }
 
     public static void printIntStream(IntStream intStream) {

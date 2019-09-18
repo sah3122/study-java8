@@ -139,6 +139,21 @@ public class StreamDemo {
                 .collect(Collectors.toList());
 
         endLine();
+
+        startLine("Compare");
+
+        List<String> resultString = lang.stream()
+                .sorted(Comparator.comparingInt(String::length))
+                .collect(Collectors.toList());
+
+        System.out.println(resultString);
+
+        resultString = lang.stream()
+                .sorted((s1, s2) -> s2.length() - s1.length())
+                .collect(Collectors.toList());
+
+        System.out.println(resultString);
+        endLine();
     }
 
     public static void printStream(Stream stream) {

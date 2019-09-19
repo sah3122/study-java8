@@ -154,6 +154,15 @@ public class StreamDemo {
 
         System.out.println(resultString);
         endLine();
+
+        startLine("Iterating");
+
+        // 특정 결과를 반환 하지 않는 peek 메소드를 사용해서 연산 결과 중간을 확인 할 수 있다
+        int sum = IntStream.of(1,3,5,7,9)
+            .peek(System.out::println)
+            .sum();
+
+        endLine();
     }
 
     public static void printStream(Stream stream) {

@@ -1,9 +1,6 @@
 import java.util.*;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 /**
  * Created by dongchul on 2019-09-03.
@@ -161,6 +158,20 @@ public class StreamDemo {
         int sum = IntStream.of(1,3,5,7,9)
             .peek(System.out::println)
             .sum();
+
+        endLine();
+
+        startLine("Calculating");
+
+        long count = IntStream.of(1, 3, 5, 7, 9).count();
+        long sum2 = IntStream.of(1, 3, 5, 7, 9).sum();
+
+        OptionalInt min = IntStream.of(1, 3, 5, 7, 9).min();
+        OptionalInt max = IntStream.of(1, 3, 5, 7, 9).max();
+
+        DoubleStream.of(1.1, 2.2, 3.3, 4.4, 5,5)
+                .average()
+                .ifPresent(System.out::println);
 
         endLine();
     }

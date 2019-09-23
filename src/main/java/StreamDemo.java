@@ -1,3 +1,4 @@
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.*;
@@ -172,6 +173,48 @@ public class StreamDemo {
         DoubleStream.of(1.1, 2.2, 3.3, 4.4, 5,5)
                 .average()
                 .ifPresent(System.out::println);
+
+        endLine();
+
+        startLine("Reduction");
+        /**
+         * accumulator : 각 요소를 처리하는 계산 로직, 각 요소가 올 때마다 중간 결과를 생성
+         * identity : 계산을 위한 초기값으로 스트림이 비어서 계산할 내용이 없더라도 리턴
+         * combiner : 병렬 스트림에서 나눠 계산한 결과를 하나로 합치는 동작
+         * 1개
+         * Optional<T> reduce(BinaryOperator<T> accumlator)
+         * 2개
+         * T reduce (T identity, BinaryOperator<T> accumulator)
+         * 3개
+         * <U> U reduce(U identity, BiFunction<U, ? super T, U> accumulator, BinaryOperator<U> combiner)
+         */
+        OptionalInt reduced = IntStream.range(1,4) // 인자 1
+                .reduce(Integer::sum);
+
+        System.out.println(reduced);
+
+        int reduceTwoParams = IntStream.range(1,4) // 인자 2
+                .reduce(10, Integer::sum);
+
+        System.out.println(reduceTwoParams);
+
+        Integer reduceParallel = Stream.of(1, 2, 3)
+                .reduce(10, Integer::sum, (a,b) -> {
+                    System.out.println("combiner was called");
+                    return a+b;
+                });
+
+        System.out.println(reduceParallel);
+        // Combiner 는 병렬 처리 시 각자 다른 쓰레드에서 실행한 결과를 마지막에 합치는 단계라 병렬 스트림에서만 동작한다.
+        Integer reduceParallel2 = Arrays.asList(1, 2, 3).parallelStream()
+                .reduce(10, Integer::sum, (a,b) -> {
+                    System.out.println("combiner was called");
+                    return a+b;
+                });
+
+        System.out.println(reduceParallel2);
+
+
 
         endLine();
     }

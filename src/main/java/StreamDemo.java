@@ -214,8 +214,71 @@ public class StreamDemo {
 
         System.out.println(reduceParallel2);
 
+        endLine();
 
+        startLine("Collecting");
 
+        List<Product> products = Arrays.asList(new Product(23, "potatos"),
+                new Product(14, "orange"),
+                new Product(13, "lemon"),
+                new Product(23, "bread"),
+                new Product(13, "sugar"),
+                new Product(13, "sugar"));
+
+        String listToString =
+                products.stream()
+                .map(Product::getName)
+                .collect(Collectors.joining(",", "<", ">"));
+        System.out.println(listToString);
+
+        Double averageAmount = products.stream().collect(Collectors.averagingInt(Product::getAmount));
+        System.out.println(averageAmount);
+        Integer summingAmount =
+                products.stream()
+                .collect(Collectors.summingInt(Product::getAmount));
+
+        summingAmount = products.stream()
+                .mapToInt(Product::getAmount).sum();
+
+        System.out.println(summingAmount);
+
+        IntSummaryStatistics statistics =
+                products.stream()
+                .collect(Collectors.summarizingInt(Product::getAmount));
+        System.out.println(statistics);
+
+        Map<Integer, List<Product>> collectorMapOfLists =
+                products.stream()
+                .collect(Collectors.groupingBy(Product::getAmount));
+
+        System.out.println(collectorMapOfLists.toString());
+
+        Map<Boolean, List<Product>> mapPartitioned =
+                products.stream()
+                .collect(Collectors.partitioningBy(el -> el.getAmount() > 15));
+
+        System.out.println(mapPartitioned);
+
+        Set<Product> unmodifiableSet =
+                products.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
+
+        System.out.println(unmodifiableSet);
+
+        Collector<Product, ?, LinkedList<Product>> toLinkedList =
+                Collector.of(LinkedList::new,
+                        LinkedList::add,
+                        (first, second) -> {
+                            first.addAll(second);
+                            return first;
+                        });
+
+        LinkedList<Product> linkedListOfPersons =
+                products.stream()
+                .collect(toLinkedList);
+
+        System.out.println(linkedListOfPersons);
+        
         endLine();
     }
 

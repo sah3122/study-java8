@@ -278,7 +278,21 @@ public class StreamDemo {
                 .collect(toLinkedList);
 
         System.out.println(linkedListOfPersons);
-        
+
+        endLine();
+
+        startLine("Matching");
+
+        List<String> nameList = Arrays.asList("Eric", "Elena", "Java");
+
+        boolean anyMatch = nameList.stream().anyMatch(name -> name.contains("a"));
+        boolean allMatch = nameList.stream().allMatch(name -> name.length() > 3);
+        boolean noneMatch = nameList.stream().noneMatch(name -> name.endsWith("s"));
+
+        System.out.println(anyMatch);
+        System.out.println(allMatch);
+        System.out.println(noneMatch);
+                
         endLine();
     }
 

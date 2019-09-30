@@ -354,7 +354,24 @@ public class StreamDemo {
 
         endLine();
 
+        startLine("Lazy Invocation");
 
+        List<String> stringList = List.of("Eric", "Elena", "Java");
+        stream = stringList.stream().filter(el-> {
+            wasCalled();
+            return el.contains("a");
+        });
+        System.out.println(counter); // 최종작업이 이루어 지지 않기 때문에 실행되지 않는다.
+
+        stringList.stream()
+                .filter(el -> {
+                    wasCalled();
+                    return el.contains("a");
+                })
+                .collect(Collectors.toList());
+        System.out.println(counter);
+
+        endLine();
     }
 
     public static void wasCalled() {

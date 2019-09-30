@@ -154,7 +154,6 @@ public class StreamDemo {
         System.out.println(resultString);
         endLine();
 
-<<<<<<< Updated upstream
         startLine("Iterating");
 
         // 특정 결과를 반환 하지 않는 peek 메소드를 사용해서 연산 결과 중간을 확인 할 수 있다
@@ -296,7 +295,7 @@ public class StreamDemo {
         System.out.println(noneMatch);
                 
         endLine();
-=======
+
         startLine("process order");
 
         System.out.println(names.toString());
@@ -312,11 +311,39 @@ public class StreamDemo {
         .findFirst();
 
         endLine();
+
+
+
+        startLine("performence prove");
+        List<String> namesList1 =  names.stream()
+                .map(el -> {
+                    wasCalled();
+                    return el.substring(0, 3);
+                })
+                .skip(2)
+                .collect(Collectors.toList());
+        System.out.println(namesList1);
+        System.out.println(counter);
+        endLine();
+
+        namesList1 = names.stream()
+                .skip(2)
+                .map(el -> {
+                    wasCalled();
+                    return el.substring(0, 3);
+                })
+                .collect(Collectors.toList());
+        System.out.println(namesList1);
+        System.out.println(counter);
+        endLine();
+
+
+
+
     }
 
     public static void wasCalled() {
         counter++;
->>>>>>> Stashed changes
     }
 
     public static void printStream(Stream stream) {

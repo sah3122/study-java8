@@ -31,7 +31,7 @@ build/
 .vscode/
 
 .gradle
-.gradle/
+.gradle/**
 
 /gradle
 /build/

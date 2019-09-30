@@ -8,6 +8,7 @@ import java.util.stream.*;
  * https://futurecreator.github.io/2018/08/26/java-8-streams/ 코드 예제 프로젝트.
  */
 public class StreamDemo {
+    static int counter;
     public static void main(String[] args) {
         Stream<String> generateStream = Stream.generate(() -> "generate").limit(5);
         startLine("generate");
@@ -153,6 +154,7 @@ public class StreamDemo {
         System.out.println(resultString);
         endLine();
 
+<<<<<<< Updated upstream
         startLine("Iterating");
 
         // 특정 결과를 반환 하지 않는 peek 메소드를 사용해서 연산 결과 중간을 확인 할 수 있다
@@ -294,6 +296,27 @@ public class StreamDemo {
         System.out.println(noneMatch);
                 
         endLine();
+=======
+        startLine("process order");
+
+        System.out.println(names.toString());
+        names.stream()
+                .filter(el -> {
+                    System.out.println("filter was called : " + el);
+                    return el.contains("a");
+                })
+                .map(el -> {
+                    System.out.println("map was called : " + el);
+                    return el.toUpperCase();
+                })
+        .findFirst();
+
+        endLine();
+    }
+
+    public static void wasCalled() {
+        counter++;
+>>>>>>> Stashed changes
     }
 
     public static void printStream(Stream stream) {
@@ -319,6 +342,7 @@ public class StreamDemo {
     }
 
     public static void endLine() {
+        counter = 0;
         System.out.println("=================================================");
     }
 }

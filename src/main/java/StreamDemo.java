@@ -372,6 +372,32 @@ public class StreamDemo {
         System.out.println(counter);
 
         endLine();
+        startLine("Null-safe Stream");
+
+        List<Integer> intList = Arrays.asList(1,2,3);
+        List<String> strList = Arrays.asList("a", "b", "c");
+
+        Stream<Integer> intStream2 = collectionToStream(intList);
+        Stream<String> strStream = collectionToStream(strList);
+
+        List<String> nullList = null;
+
+//        nullList.stream()
+//                .filter(str -> str.contains("a"))
+//                .map(String::length)
+//                .forEach(System.out::println); // NPE
+        collectionToStream(nullList)
+                .filter(str -> str.contains("a"))
+                .map(String::length)
+                .forEach(System.out::println);
+        endLine();
+    }
+
+    public static <T> Stream<T> collectionToStream(Collection<T> collection) {
+        return Optional
+                .ofNullable(collection)
+                .map(Collection::stream)
+                .orElseGet(Stream::empty);
     }
 
     public static void wasCalled() {

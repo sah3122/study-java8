@@ -337,7 +337,22 @@ public class StreamDemo {
         System.out.println(counter);
         endLine();
 
+        startLine("Reused Stream");
 
+        Stream<String> stream = Stream.of("Eric", "Elena", "Java")
+                .filter(name -> name.contains("a"));
+
+        Optional<String> firstElement = stream.findFirst();
+        //Optional<String> anyElement = stream.findAny(); Stream을 이미 소비해서 error
+
+        List<String> reusedStream = Stream.of("Eric", "Elena", "Java")
+                .filter(name -> name.contains("a"))
+                .collect(Collectors.toList());
+
+        firstElement = reusedStream.stream().findFirst();
+        Optional<String> anyElment = reusedStream.stream().findAny();
+
+        endLine();
 
 
     }
